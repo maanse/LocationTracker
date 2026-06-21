@@ -631,6 +631,9 @@
         <p class="hint" style="margin-top:0">All journey data is stored in your browser's localStorage. Export CSV regularly for backup.</p>
         <div class="btn-row two-col" style="margin-top:12px">
           <button class="btn btn-danger" id="btnClearToday" type="button">Clear Today's Log</button>
+          <button class="btn btn-danger" id="btnClearHistory" type="button">Clear Saved Days</button>
+        </div>
+        <div class="btn-row" style="margin-top:10px">
           <button class="btn btn-danger" id="btnClearAllData" type="button">Clear All Data</button>
         </div>
       </div>
@@ -1097,6 +1100,18 @@
     if (day) renderMapForDay(day);
   }
 
+  /* ── Clear saved days ── */
+  function clearHistory() {
+    const history = loadHistory();
+    if (!history.length) { showToast('No saved days to clear'); return; }
+    if (!confirm(`Delete all ${history.length} saved day${history.length !== 1 ? 's' : ''}? This cannot be undone.`)) return;
+    localStorage.removeItem(STORAGE.HISTORY);
+    selectedHistoryId = null;
+    destroyMap();
+    renderHistory();
+    showToast('Saved days cleared');
+  }
+
   /* ── Clear all ── */
   function clearAllData() {
     if (!confirm("Delete ALL journey history and today's log? This cannot be undone.")) return;
@@ -1133,6 +1148,7 @@
     $('#btnFinalizeDay').addEventListener('click', finalizeDay);
     $('#btnClearToday').addEventListener('click', clearToday);
     $('#btnExportCsv').addEventListener('click', exportCsv);
+    $('#btnClearHistory').addEventListener('click', clearHistory);
     $('#btnClearAllData').addEventListener('click', clearAllData);
     $('#btnAddProject').addEventListener('click', addProject);
 
