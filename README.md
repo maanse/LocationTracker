@@ -54,6 +54,7 @@ When you export your data to a CSV file, it is structured as follows for easy pa
 Date	Stop #	Stop Name	Time	Latitude	Longitude	Tags	Status
 2026-06-21	1	Head Office	09:00 AM	51.5074	-0.1278	Internal; Admin	Finalised
 2026-06-21	2	Client Site A	11:30 AM	51.5152	-0.1419	Client Work; Travel	Finalised
+
 🛡️ License
 
 This project is open-source and free to adapt for personal or internal corporate use.
