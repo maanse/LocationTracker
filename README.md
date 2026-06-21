@@ -1,6 +1,6 @@
 # LocationTracker
 
-Work Journey Tracker
+Work Location Tracker
 
 A lightweight, mobile-first web application designed to help you easily record your daily locations for work-related travel expenses. Built as a single-file application, it requires no backend or third-party database, keeping your data fast, local, and completely private.
 ✨ Features
