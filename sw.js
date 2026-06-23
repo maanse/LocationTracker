@@ -1,4 +1,4 @@
-const CACHE_NAME = 'journey-tracker-v1';
+const CACHE_NAME = 'journey-tracker-v2';
 
 const PRECACHE = [
   './index.html',
