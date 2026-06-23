@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
   <title>Work Journey & Expense Tracker</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
@@ -549,6 +548,68 @@
       .app { border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
       #map-container { height: 360px; }
     }
+  
+    /* ── Modal meta row (date + coords) ── */
+    .modal-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-date-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1.5px solid var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .meta-date-btn:hover { background: #bfdbfe; }
+
+    .meta-coords-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-family: ui-monospace, monospace;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.12s, color 0.12s;
+      -webkit-tap-highlight-color: transparent;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .meta-coords-btn:hover,
+    .meta-coords-btn.active {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ── Location picker map inside modal ── */
+    #locationPickerMap {
+      width: 100%;
+      height: 220px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+    }
+
   </style>
 </head>
 <body>
@@ -663,7 +724,25 @@
 <div class="modal-overlay" id="stopModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal">
     <h2 id="modalTitle">Name this stop</h2>
-    <p id="modalCoords">Fetching location…</p>
+
+    <!-- date + coords row -->
+    <div class="modal-meta-row">
+      <button class="meta-date-btn" id="btnModalDate" type="button" title="Change date">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span id="modalDateLabel"></span>
+      </button>
+      <input type="date" id="modalDateInput" style="display:none">
+      <button class="meta-coords-btn" id="btnModalCoords" type="button" title="Click to pick location on map">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="modalCoords">–</span>
+      </button>
+    </div>
+
+    <!-- inline location picker map (hidden until coords clicked) -->
+    <div id="locationPickerWrap" style="display:none">
+      <div id="locationPickerMap"></div>
+      <p class="hint" style="margin:6px 0 0;text-align:center">Tap the map to move the pin</p>
+    </div>
 
     <div class="field">
       <label for="stopNameInput">Stop name *</label>
@@ -883,10 +962,34 @@
   }
 
   /* ── Stop modal ── */
+  let pickerMap = null;
+  let pickerMarker = null;
+  let pendingDate = null; // ISO date string e.g. "2025-06-20"
+
+  function todayIsoDate() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+
+  function setModalDate(isoDate) {
+    pendingDate = isoDate;
+    const d = new Date(isoDate + 'T12:00:00');
+    const label = (isoDate === todayIsoDate())
+      ? 'Today'
+      : d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+    $('#modalDateLabel').textContent = label;
+    $('#modalDateInput').value = isoDate;
+  }
+
   function openStopModal(lat, lng) {
     pendingLocation = { lat, lng };
     $('#modalCoords').textContent = formatCoords(lat, lng);
+    $('#btnModalCoords').classList.remove('active');
+    $('#locationPickerWrap').style.display = 'none';
     $('#stopNameInput').value = '';
+
+    // Reset date to today
+    setModalDate(todayIsoDate());
 
     // Populate project checkboxes
     const projects = loadProjects();
@@ -911,7 +1014,61 @@
 
   function closeStopModal() {
     pendingLocation = null;
+    pendingDate = null;
     $('#stopModal').classList.remove('open');
+    // destroy picker map
+    if (pickerMap) { pickerMap.remove(); pickerMap = null; pickerMarker = null; }
+    $('#locationPickerWrap').style.display = 'none';
+    $('#btnModalCoords').classList.remove('active');
+  }
+
+  function toggleLocationPicker() {
+    const wrap = $('#locationPickerWrap');
+    const btn = $('#btnModalCoords');
+    const isOpen = wrap.style.display !== 'none';
+
+    if (isOpen) {
+      wrap.style.display = 'none';
+      btn.classList.remove('active');
+      if (pickerMap) { pickerMap.remove(); pickerMap = null; pickerMarker = null; }
+      return;
+    }
+
+    wrap.style.display = '';
+    btn.classList.add('active');
+
+    // small delay so element is visible before Leaflet measures it
+    setTimeout(() => {
+      if (pickerMap) { pickerMap.remove(); pickerMap = null; pickerMarker = null; }
+
+      const lat = pendingLocation.lat;
+      const lng = pendingLocation.lng;
+
+      pickerMap = L.map('locationPickerMap', { zoomControl: true }).setView([lat, lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(pickerMap);
+
+      pickerMarker = L.marker([lat, lng], { draggable: true }).addTo(pickerMap);
+
+      function updateFromLatLng(newLat, newLng) {
+        pendingLocation = { lat: newLat, lng: newLng };
+        $('#modalCoords').textContent = formatCoords(newLat, newLng);
+      }
+
+      pickerMarker.on('dragend', e => {
+        const pos = e.target.getLatLng();
+        updateFromLatLng(pos.lat, pos.lng);
+      });
+
+      pickerMap.on('click', e => {
+        pickerMarker.setLatLng(e.latlng);
+        updateFromLatLng(e.latlng.lat, e.latlng.lng);
+      });
+
+      pickerMap.invalidateSize();
+    }, 60);
   }
 
   function savePendingStop() {
@@ -921,19 +1078,47 @@
 
     const tags = Array.from($$('#modalProjectChecks input:checked')).map(el => el.value);
 
-    const stops = loadActiveStops();
-    stops.push({
-      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
-      name,
-      lat: pendingLocation.lat,
-      lng: pendingLocation.lng,
-      tags,
-      timestamp: new Date().toISOString()
-    });
-    saveActiveStops(stops);
+    // Build timestamp from selected date + current time
+    const now = new Date();
+    const timeStr = String(now.getHours()).padStart(2,'0') + ':' +
+                    String(now.getMinutes()).padStart(2,'0') + ':' +
+                    String(now.getSeconds()).padStart(2,'0');
+    const isoDate = pendingDate || todayIsoDate();
+    const timestamp = new Date(isoDate + 'T' + timeStr).toISOString();
+
+    // If logging for a past date, save into history instead of active stops
+    const isToday = (isoDate === todayIsoDate());
+
+    if (isToday) {
+      const stops = loadActiveStops();
+      stops.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
+        name, lat: pendingLocation.lat, lng: pendingLocation.lng, tags, timestamp
+      });
+      saveActiveStops(stops);
+      renderTodayStops();
+    } else {
+      const history = loadHistory();
+      let day = history.find(d => d.date === isoDate);
+      if (!day) {
+        day = {
+          id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
+          date: isoDate,
+          finalizedAt: new Date().toISOString(),
+          stops: []
+        };
+        history.push(day);
+      }
+      day.stops.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
+        name, lat: pendingLocation.lat, lng: pendingLocation.lng, tags, timestamp
+      });
+      saveHistory(history);
+      renderHistory();
+    }
+
     closeStopModal();
-    renderTodayStops();
-    showToast('Stop logged successfully');
+    showToast(isToday ? 'Stop logged successfully' : `Stop added to ${formatDisplayDate(isoDate)}`);
   }
 
   /* ── Geolocation ── */
@@ -1146,6 +1331,15 @@
     $('#btnLogLocation').addEventListener('click', logCurrentLocation);
     $('#btnSaveStop').addEventListener('click', savePendingStop);
     $('#btnCancelStop').addEventListener('click', closeStopModal);
+    $('#btnModalCoords').addEventListener('click', toggleLocationPicker);
+
+    // Calendar icon → open native date picker
+    $('#btnModalDate').addEventListener('click', () => $('#modalDateInput').showPicker
+      ? $('#modalDateInput').showPicker()
+      : $('#modalDateInput').click());
+    $('#modalDateInput').addEventListener('change', e => {
+      if (e.target.value) setModalDate(e.target.value);
+    });
     $('#btnFinalizeDay').addEventListener('click', finalizeDay);
     $('#btnClearToday').addEventListener('click', clearToday);
     $('#btnExportCsv').addEventListener('click', exportCsv);
