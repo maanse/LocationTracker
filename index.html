@@ -4,19 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
-
-  <!-- PWA / Add to Home Screen -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Journey">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Journey">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjE0MCIgZmlsbD0iIzBmMTcyYSIvPgogIDxwYXRoIGQ9Ik0gMTIwIDQwMCBDIDEyMCAyODAsIDI0MCAzMjAsIDI2MCAyMjAgQyAyODAgMTIwLCAzNjAgMTYwLCAzODAgMTEwIiAKICAgICAgICBmaWxsPSJub25lIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iMjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0gMzgwIDExMCBDIDM5MCA5MCwgNDAwIDgwLCA0MTAgNzAiIAogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyNCIgc3Ryb2tlLWRhc2hhcnJheT0iMjAgMTUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxjaXJjbGUgY3g9IjEyMCIgY3k9IjQwMCIgcj0iMzAiIGZpbGw9IiMwZjE3MmEiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIxNiIgLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODAsIDExMCkiPgogICAgPGVsbGlwc2UgY3g9IjAiIGN5PSIxNSIgcng9IjIwIiByeT0iOCIgZmlsbD0iIzAwMDAwMCIgb3BhY2l0eT0iMC4zIi8+CiAgICA8cGF0aCBkPSJNIDAgMCBDIC0zNSAtMzUsIC0zNSAtNzAsIDAgLTcwIEMgMzUgLTcwLCAzNSAtMzUsIDAgMCBaIiBmaWxsPSIjZmZmZmZmIi8+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iLTQ1IiByPSIxNCIgZmlsbD0iIzI1NjNlYiIvPgogIDwvZz4KPC9zdmc+">
-  <!-- Apple touch icons (home screen icon on iOS) -->
-  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjE0MCIgZmlsbD0iIzBmMTcyYSIvPgogIDxwYXRoIGQ9Ik0gMTIwIDQwMCBDIDEyMCAyODAsIDI0MCAzMjAsIDI2MCAyMjAgQyAyODAgMTIwLCAzNjAgMTYwLCAzODAgMTEwIiAKICAgICAgICBmaWxsPSJub25lIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iMjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0gMzgwIDExMCBDIDM5MCA5MCwgNDAwIDgwLCA0MTAgNzAiIAogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyNCIgc3Ryb2tlLWRhc2hhcnJheT0iMjAgMTUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxjaXJjbGUgY3g9IjEyMCIgY3k9IjQwMCIgcj0iMzAiIGZpbGw9IiMwZjE3MmEiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIxNiIgLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODAsIDExMCkiPgogICAgPGVsbGlwc2UgY3g9IjAiIGN5PSIxNSIgcng9IjIwIiByeT0iOCIgZmlsbD0iIzAwMDAwMCIgb3BhY2l0eT0iMC4zIi8+CiAgICA8cGF0aCBkPSJNIDAgMCBDIC0zNSAtMzUsIC0zNSAtNzAsIDAgLTcwIEMgMzUgLTcwLCAzNSAtMzUsIDAgMCBaIiBmaWxsPSIjZmZmZmZmIi8+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iLTQ1IiByPSIxNCIgZmlsbD0iIzI1NjNlYiIvPgogIDwvZz4KPC9zdmc+">
-
   <title>Work Journey & Expense Tracker</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
@@ -648,4 +636,735 @@
 
       <div class="btn-row">
         <button class="btn btn-success" id="btnFinalizeDay" type="button">
-      
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+          Finalise &amp; Save Day
+        </button>
+      </div>
+    </section>
+
+    <!-- ── HISTORY ── -->
+    <section class="panel" id="panel-history" aria-label="Journey history">
+      <div class="card">
+        <button class="btn btn-primary" id="btnExportCsv" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Export to CSV
+        </button>
+        <p class="hint" style="margin:10px 0 0">Download all saved days and today's in-progress stops for your expense claim.</p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Saved Days</h2>
+        <div id="historyList"></div>
+      </div>
+
+      <div class="card" id="mapCard" hidden>
+        <h2 class="card-title" id="mapCardTitle">Journey Map</h2>
+        <div id="map-container">
+          <div class="map-placeholder" id="mapPlaceholder">
+            <strong>Select a saved day</strong>
+            Tap a day above to view your journey on the map.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SETTINGS ── -->
+    <section class="panel" id="panel-settings" aria-label="Settings">
+
+      <div class="card">
+        <h2 class="card-title">Projects &amp; Tags</h2>
+        <p class="hint" style="margin:0 0 14px">Define project tags that appear as tick boxes when logging a stop. You can assign multiple tags per stop.</p>
+
+        <div id="projectList"></div>
+
+        <div class="add-project-row">
+          <input type="text" id="newProjectInput" placeholder="New project name…" maxlength="40" autocomplete="off">
+          <button class="btn btn-primary btn-sm" id="btnAddProject" type="button">Add</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Maps</h2>
+        <p class="hint" style="margin-top:0">Journey maps use <strong>Leaflet</strong> with free <strong>OpenStreetMap</strong> tiles — no API key or billing required.</p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Data</h2>
+        <p class="hint" style="margin-top:0">All journey data is stored in your browser's localStorage. Export CSV regularly for backup.</p>
+        <div class="btn-row two-col" style="margin-top:12px">
+          <button class="btn btn-danger" id="btnClearToday" type="button">Clear Today's Log</button>
+          <button class="btn btn-danger" id="btnClearHistory" type="button">Clear Saved Days</button>
+        </div>
+        <div class="btn-row" style="margin-top:10px">
+          <button class="btn btn-danger" id="btnClearAllData" type="button">Clear All Data</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <button class="nav-btn active" data-tab="today" type="button" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Today
+      </button>
+      <button class="nav-btn" data-tab="history" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>
+        History
+      </button>
+      <button class="nav-btn" data-tab="settings" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- Stop modal -->
+<div class="modal-overlay" id="stopModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <h2 id="modalTitle">Name this stop</h2>
+
+    <!-- date + coords row -->
+    <div class="modal-meta-row">
+      <button class="meta-date-btn" id="btnModalDate" type="button" title="Change date">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span id="modalDateLabel"></span>
+      </button>
+      <input type="date" id="modalDateInput" style="display:none">
+      <button class="meta-coords-btn" id="btnModalCoords" type="button" title="Click to pick location on map">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="modalCoords">–</span>
+      </button>
+    </div>
+
+    <!-- inline location picker map (hidden until coords clicked) -->
+    <div id="locationPickerWrap" style="display:none">
+      <div id="locationPickerMap"></div>
+      <p class="hint" style="margin:6px 0 0;text-align:center">Tap the map to move the pin</p>
+    </div>
+
+    <div class="field">
+      <label for="stopNameInput">Stop name *</label>
+      <input type="text" id="stopNameInput" placeholder="e.g. Office, Client Site A" maxlength="120" autocomplete="off">
+    </div>
+
+    <div id="modalProjectSection" style="display:none">
+      <div class="modal-section-label">Project tags</div>
+      <div class="project-checks" id="modalProjectChecks"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="btnCancelStop" type="button">Cancel</button>
+      <button class="btn btn-primary" id="btnSaveStop" type="button">Save Stop</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function () {
+  'use strict';
+
+  const STORAGE = {
+    ACTIVE: 'wjt_active_stops',
+    HISTORY: 'wjt_history',
+    ACTIVE_DATE: 'wjt_active_date',
+    PROJECTS: 'wjt_projects'
+  };
+
+  const DEFAULT_PROJECTS = ['Client Work', 'Internal', 'Travel', 'Admin'];
+
+  let pendingLocation = null;
+  let mapInstance = null;
+  let mapMarkers = [];
+  let mapPolyline = null;
+  let selectedHistoryId = null;
+
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => document.querySelectorAll(sel);
+
+  /* ── Storage helpers ── */
+  function loadHistory() {
+    try { return JSON.parse(localStorage.getItem(STORAGE.HISTORY) || '[]'); }
+    catch { return []; }
+  }
+  function saveHistory(h) { localStorage.setItem(STORAGE.HISTORY, JSON.stringify(h)); }
+
+  function ensureActiveDate() {
+    const today = todayKey();
+    if (localStorage.getItem(STORAGE.ACTIVE_DATE) !== today) {
+      localStorage.setItem(STORAGE.ACTIVE_DATE, today);
+      localStorage.setItem(STORAGE.ACTIVE, JSON.stringify([]));
+    }
+  }
+  function loadActiveStops() {
+    ensureActiveDate();
+    try { return JSON.parse(localStorage.getItem(STORAGE.ACTIVE) || '[]'); }
+    catch { return []; }
+  }
+  function saveActiveStops(stops) {
+    localStorage.setItem(STORAGE.ACTIVE, JSON.stringify(stops));
+    localStorage.setItem(STORAGE.ACTIVE_DATE, todayKey());
+  }
+
+  function loadProjects() {
+    try {
+      const saved = localStorage.getItem(STORAGE.PROJECTS);
+      return saved ? JSON.parse(saved) : DEFAULT_PROJECTS.slice();
+    } catch { return DEFAULT_PROJECTS.slice(); }
+  }
+  function saveProjects(p) { localStorage.setItem(STORAGE.PROJECTS, JSON.stringify(p)); }
+
+  /* ── Date / time ── */
+  function todayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+  function formatDisplayDate(dateStr) {
+    const d = dateStr ? new Date(dateStr + 'T12:00:00') : new Date();
+    return d.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  function formatTime(iso) {
+    return new Date(iso).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  }
+  function formatCoords(lat, lng) { return lat.toFixed(5) + ', ' + lng.toFixed(5); }
+
+  /* ── Toast ── */
+  function showToast(msg) {
+    const el = $('#toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => el.classList.remove('show'), 2800);
+  }
+
+  /* ── Escape HTML ── */
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  /* ── Render today ── */
+  function renderTodayStops() {
+    const stops = loadActiveStops();
+    const list = $('#todayStopList');
+
+    if (!stops.length) {
+      list.innerHTML = `
+        <li class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <p>No stops logged yet today.<br>Tap the button above to log your first location.</p>
+        </li>`;
+      return;
+    }
+
+    list.innerHTML = stops.map((stop, i) => {
+      const tagsHtml = stop.tags && stop.tags.length
+        ? `<div class="stop-tags">${stop.tags.map(t => `<span class="stop-tag">${escapeHtml(t)}</span>`).join('')}</div>`
+        : '';
+      return `
+        <li class="stop-item">
+          <div class="stop-num">${i + 1}</div>
+          <div class="stop-body">
+            <div class="stop-name">${escapeHtml(stop.name)}</div>
+            <div class="stop-meta">${formatTime(stop.timestamp)} · ${formatCoords(stop.lat, stop.lng)}</div>
+            ${tagsHtml}
+          </div>
+        </li>`;
+    }).join('');
+  }
+
+  /* ── Render history ── */
+  function renderHistory() {
+    const history = loadHistory().slice().sort((a, b) => b.date.localeCompare(a.date));
+    const container = $('#historyList');
+
+    if (!history.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <p>No saved days yet.<br>Finalise a day from the Today tab to see it here.</p>
+        </div>`;
+      $('#mapCard').hidden = true;
+      return;
+    }
+
+    container.innerHTML = history.map(day => `
+      <div class="history-item${day.id === selectedHistoryId ? ' selected' : ''}"
+           data-id="${day.id}" role="button" tabindex="0" aria-label="View ${formatDisplayDate(day.date)}">
+        <div>
+          <div class="history-date">${formatDisplayDate(day.date)}</div>
+          <div class="history-meta">${day.stops.length} stop${day.stops.length !== 1 ? 's' : ''} · Saved ${formatTime(day.finalizedAt)}</div>
+        </div>
+        <span class="history-badge">${day.stops.length}</span>
+      </div>`).join('');
+
+    container.querySelectorAll('.history-item').forEach(el => {
+      el.addEventListener('click', () => selectHistoryDay(el.dataset.id));
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectHistoryDay(el.dataset.id); }
+      });
+    });
+  }
+
+  /* ── Render project settings ── */
+  function renderProjects() {
+    const projects = loadProjects();
+    const list = $('#projectList');
+
+    if (!projects.length) {
+      list.innerHTML = '<p class="hint" style="margin:0 0 4px">No projects yet. Add one below.</p>';
+      return;
+    }
+
+    list.innerHTML = projects.map((p, i) => `
+      <div class="project-row">
+        <div class="project-dot"></div>
+        <span class="project-row-name">${escapeHtml(p)}</span>
+        <button class="btn btn-danger btn-sm" data-idx="${i}" type="button">Remove</button>
+      </div>`).join('');
+
+    list.querySelectorAll('.btn-danger').forEach(btn => {
+      btn.addEventListener('click', () => removeProject(Number(btn.dataset.idx)));
+    });
+  }
+
+  function addProject() {
+    const input = $('#newProjectInput');
+    const name = input.value.trim();
+    if (!name) { input.focus(); return; }
+    const projects = loadProjects();
+    if (projects.map(p => p.toLowerCase()).includes(name.toLowerCase())) {
+      showToast('Project already exists'); return;
+    }
+    projects.push(name);
+    saveProjects(projects);
+    input.value = '';
+    renderProjects();
+    showToast('Project added');
+  }
+
+  function removeProject(idx) {
+    const projects = loadProjects();
+    projects.splice(idx, 1);
+    saveProjects(projects);
+    renderProjects();
+  }
+
+  /* ── Stop modal ── */
+  let pickerMap = null;
+  let pickerMarker = null;
+  let pendingDate = null; // ISO date string e.g. "2025-06-20"
+
+  function todayIsoDate() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+
+  function setModalDate(isoDate) {
+    pendingDate = isoDate;
+    const d = new Date(isoDate + 'T12:00:00');
+    const label = (isoDate === todayIsoDate())
+      ? 'Today'
+      : d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+    $('#modalDateLabel').textContent = label;
+    $('#modalDateInput').value = isoDate;
+  }
+
+  function openStopModal(lat, lng) {
+    pendingLocation = { lat, lng };
+    $('#modalCoords').textContent = formatCoords(lat, lng);
+    $('#btnModalCoords').classList.remove('active');
+    $('#locationPickerWrap').style.display = 'none';
+    $('#stopNameInput').value = '';
+
+    // Reset date to today
+    setModalDate(todayIsoDate());
+
+    // Populate project checkboxes
+    const projects = loadProjects();
+    const section = $('#modalProjectSection');
+    const grid = $('#modalProjectChecks');
+
+    if (projects.length) {
+      section.style.display = '';
+      grid.innerHTML = projects.map((p, i) => `
+        <label class="project-check-label">
+          <input type="checkbox" value="${escapeHtml(p)}" id="mpc_${i}">
+          <div class="cb-box"></div>
+          <span class="cb-text">${escapeHtml(p)}</span>
+        </label>`).join('');
+    } else {
+      section.style.display = 'none';
+    }
+
+    $('#stopModal').classList.add('open');
+    setTimeout(() => $('#stopNameInput').focus(), 120);
+  }
+
+  function closeStopModal() {
+    pendingLocation = null;
+    pendingDate = null;
+    $('#stopModal').classList.remove('open');
+    // destroy picker map
+    if (pickerMap) { pickerMap.remove(); pickerMap = null; pickerMarker = null; }
+    $('#locationPickerWrap').style.display = 'none';
+    $('#btnModalCoords').classList.remove('active');
+  }
+
+  function toggleLocationPicker() {
+    const wrap = $('#locationPickerWrap');
+    const btn = $('#btnModalCoords');
+    const isOpen = wrap.style.display !== 'none';
+
+    if (isOpen) {
+      wrap.style.display = 'none';
+      btn.classList.remove('active');
+      if (pickerMap) { pickerMap.remove(); pickerMap = null; pickerMarker = null; }
+      return;
+    }
+
+    wrap.style.display = '';
+    btn.classList.add('active');
+
+    // small delay so element is visible before Leaflet measures it
+    setTimeout(() => {
+      if (pickerMap) { pickerMap.remove(); pickerMap = null; pickerMarker = null; }
+
+      const lat = pendingLocation.lat;
+      const lng = pendingLocation.lng;
+
+      pickerMap = L.map('locationPickerMap', { zoomControl: true }).setView([lat, lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(pickerMap);
+
+      pickerMarker = L.marker([lat, lng], { draggable: true }).addTo(pickerMap);
+
+      function updateFromLatLng(newLat, newLng) {
+        pendingLocation = { lat: newLat, lng: newLng };
+        $('#modalCoords').textContent = formatCoords(newLat, newLng);
+      }
+
+      pickerMarker.on('dragend', e => {
+        const pos = e.target.getLatLng();
+        updateFromLatLng(pos.lat, pos.lng);
+      });
+
+      pickerMap.on('click', e => {
+        pickerMarker.setLatLng(e.latlng);
+        updateFromLatLng(e.latlng.lat, e.latlng.lng);
+      });
+
+      pickerMap.invalidateSize();
+    }, 60);
+  }
+
+  function savePendingStop() {
+    const name = $('#stopNameInput').value.trim();
+    if (!name) { showToast('Please enter a stop name'); $('#stopNameInput').focus(); return; }
+    if (!pendingLocation) return;
+
+    const tags = Array.from($$('#modalProjectChecks input:checked')).map(el => el.value);
+
+    // Build timestamp from selected date + current time
+    const now = new Date();
+    const timeStr = String(now.getHours()).padStart(2,'0') + ':' +
+                    String(now.getMinutes()).padStart(2,'0') + ':' +
+                    String(now.getSeconds()).padStart(2,'0');
+    const isoDate = pendingDate || todayIsoDate();
+    const timestamp = new Date(isoDate + 'T' + timeStr).toISOString();
+
+    // If logging for a past date, save into history instead of active stops
+    const isToday = (isoDate === todayIsoDate());
+
+    if (isToday) {
+      const stops = loadActiveStops();
+      stops.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
+        name, lat: pendingLocation.lat, lng: pendingLocation.lng, tags, timestamp
+      });
+      saveActiveStops(stops);
+      renderTodayStops();
+    } else {
+      const history = loadHistory();
+      let day = history.find(d => d.date === isoDate);
+      if (!day) {
+        day = {
+          id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
+          date: isoDate,
+          finalizedAt: new Date().toISOString(),
+          stops: []
+        };
+        history.push(day);
+      }
+      day.stops.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
+        name, lat: pendingLocation.lat, lng: pendingLocation.lng, tags, timestamp
+      });
+      saveHistory(history);
+      renderHistory();
+    }
+
+    closeStopModal();
+    showToast(isToday ? 'Stop logged successfully' : `Stop added to ${formatDisplayDate(isoDate)}`);
+  }
+
+  /* ── Geolocation ── */
+  function geolocationErrorMessage(err) {
+    switch (err.code) {
+      case err.PERMISSION_DENIED:    return 'Location permission denied. Please allow access in your browser settings and try again.';
+      case err.POSITION_UNAVAILABLE: return 'GPS signal unavailable. Move to an area with better reception or enable location services.';
+      case err.TIMEOUT:              return 'Location request timed out. Please try again.';
+      default:                       return 'Unable to retrieve your location. Please try again.';
+    }
+  }
+
+  function logCurrentLocation() {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser. Try a modern mobile browser like Chrome or Safari.');
+      return;
+    }
+    const btn = $('#btnLogLocation');
+    const original = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading-dot"></span>Getting location…';
+
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        btn.disabled = false;
+        btn.innerHTML = original;
+        openStopModal(pos.coords.latitude, pos.coords.longitude);
+      },
+      err => {
+        btn.disabled = false;
+        btn.innerHTML = original;
+        alert(geolocationErrorMessage(err));
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+    );
+  }
+
+  /* ── Finalise / clear ── */
+  function finalizeDay() {
+    const stops = loadActiveStops();
+    if (!stops.length) { alert('No stops to save. Log at least one location first.'); return; }
+    if (!confirm(`Save ${stops.length} stop${stops.length !== 1 ? 's' : ''} for today and start fresh tomorrow?`)) return;
+
+    const history = loadHistory();
+    const dayEntry = {
+      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+      date: todayKey(),
+      finalizedAt: new Date().toISOString(),
+      stops: stops.slice()
+    };
+    const existingIdx = history.findIndex(d => d.date === dayEntry.date);
+    if (existingIdx >= 0) history[existingIdx] = dayEntry;
+    else history.push(dayEntry);
+
+    saveHistory(history);
+    saveActiveStops([]);
+    renderTodayStops();
+    renderHistory();
+    showToast('Day saved to history');
+  }
+
+  function clearToday() {
+    const stops = loadActiveStops();
+    if (!stops.length) { showToast('No stops to clear'); return; }
+    if (!confirm('Clear all stops logged today? This cannot be undone.')) return;
+    saveActiveStops([]);
+    renderTodayStops();
+    showToast("Today's log cleared");
+  }
+
+  /* ── CSV export ── */
+  function csvEscape(val) {
+    const s = String(val);
+    return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function exportCsv() {
+    const history = loadHistory().slice().sort((a, b) => a.date.localeCompare(b.date));
+    const active = loadActiveStops();
+    if (!history.length && !active.length) { alert('No journey data to export yet.'); return; }
+
+    const rows = [['Date', 'Stop #', 'Stop Name', 'Time', 'Latitude', 'Longitude', 'Tags', 'Status']];
+    history.forEach(day => {
+      day.stops.forEach((stop, i) => {
+        rows.push([day.date, i + 1, csvEscape(stop.name), formatTime(stop.timestamp),
+          stop.lat, stop.lng, csvEscape((stop.tags || []).join('; ')), 'Finalised']);
+      });
+    });
+    active.forEach((stop, i) => {
+      rows.push([todayKey(), i + 1, csvEscape(stop.name), formatTime(stop.timestamp),
+        stop.lat, stop.lng, csvEscape((stop.tags || []).join('; ')), 'In Progress']);
+    });
+
+    const csv = rows.map(r => r.join(',')).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'work-journey-export-' + todayKey() + '.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('CSV downloaded');
+  }
+
+  /* ── Map ── */
+  function destroyMap() {
+    if (mapInstance) { mapInstance.remove(); mapInstance = null; }
+    mapMarkers = []; mapPolyline = null;
+  }
+
+  function showMapPlaceholder(msg) {
+    destroyMap();
+    $('#map-container').innerHTML = `<div class="map-placeholder" id="mapPlaceholder">${msg}</div>`;
+  }
+
+  function createNumberedIcon(num) {
+    return L.divIcon({
+      className: 'wjt-marker',
+      html: `<div class="wjt-marker-pin">${num}</div>`,
+      iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -20]
+    });
+  }
+
+  function renderMapForDay(day) {
+    selectedHistoryId = day.id;
+    renderHistory();
+    $('#mapCard').hidden = false;
+    $('#mapCardTitle').textContent = 'Journey Map — ' + formatDisplayDate(day.date);
+
+    if (!day.stops.length) { showMapPlaceholder('<strong>No stops</strong>This day has no locations to display.'); return; }
+    if (typeof L === 'undefined') { showMapPlaceholder('<strong>Map failed to load</strong>Check your internet connection and refresh.'); return; }
+
+    destroyMap();
+    $('#map-container').innerHTML = '<div id="leafletMap"></div>';
+
+    const first = day.stops[0];
+    mapInstance = L.map('leafletMap', { zoomControl: true }).setView([first.lat, first.lng], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(mapInstance);
+
+    const latlngs = [];
+    day.stops.forEach((stop, i) => {
+      const latlng = [stop.lat, stop.lng];
+      latlngs.push(latlng);
+      const tagsLine = stop.tags && stop.tags.length ? `<br><em style="color:#64748b">${stop.tags.map(t => escapeHtml(t)).join(', ')}</em>` : '';
+      L.marker(latlng, { icon: createNumberedIcon(i + 1) })
+        .addTo(mapInstance)
+        .bindPopup(`<strong>Stop ${i + 1}: ${escapeHtml(stop.name)}</strong><br><span style="color:#64748b">${formatTime(stop.timestamp)}</span>${tagsLine}`);
+      mapMarkers.push();
+    });
+
+    if (latlngs.length > 1) {
+      mapPolyline = L.polyline(latlngs, { color: '#2563eb', weight: 4, opacity: 0.85 }).addTo(mapInstance);
+      mapInstance.fitBounds(mapPolyline.getBounds(), { padding: [40, 40] });
+    } else {
+      mapInstance.setZoom(15);
+    }
+    setTimeout(() => mapInstance.invalidateSize(), 100);
+  }
+
+  function selectHistoryDay(id) {
+    const day = loadHistory().find(d => d.id === id);
+    if (day) renderMapForDay(day);
+  }
+
+  /* ── Clear saved days ── */
+  function clearHistory() {
+    const history = loadHistory();
+    if (!history.length) { showToast('No saved days to clear'); return; }
+    if (!confirm(`Delete all ${history.length} saved day${history.length !== 1 ? 's' : ''}? This cannot be undone.`)) return;
+    localStorage.removeItem(STORAGE.HISTORY);
+    selectedHistoryId = null;
+    destroyMap();
+    renderHistory();
+    showToast('Saved days cleared');
+  }
+
+  /* ── Clear all ── */
+  function clearAllData() {
+    if (!confirm("Delete ALL journey history and today's log? This cannot be undone.")) return;
+    Object.values(STORAGE).forEach(k => localStorage.removeItem(k));
+    selectedHistoryId = null;
+    destroyMap();
+    renderTodayStops();
+    renderHistory();
+    renderProjects();
+    showToast('All data cleared');
+  }
+
+  /* ── Tabs ── */
+  function switchTab(tab) {
+    $$('.panel').forEach(p => p.classList.remove('active'));
+    $$('.nav-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === tab);
+      b.setAttribute('aria-current', b.dataset.tab === tab ? 'page' : 'false');
+    });
+    $(`#panel-${tab}`).classList.add('active');
+    if (tab === 'history' && mapInstance) setTimeout(() => mapInstance.invalidateSize(), 150);
+  }
+
+  /* ── Init ── */
+  function init() {
+    $('#dateDisplay').textContent = formatDisplayDate(todayKey());
+    renderTodayStops();
+    renderHistory();
+    renderProjects();
+
+    $('#btnLogLocation').addEventListener('click', logCurrentLocation);
+    $('#btnSaveStop').addEventListener('click', savePendingStop);
+    $('#btnCancelStop').addEventListener('click', closeStopModal);
+    $('#btnModalCoords').addEventListener('click', toggleLocationPicker);
+
+    // Calendar icon → open native date picker
+    $('#btnModalDate').addEventListener('click', () => $('#modalDateInput').showPicker
+      ? $('#modalDateInput').showPicker()
+      : $('#modalDateInput').click());
+    $('#modalDateInput').addEventListener('change', e => {
+      if (e.target.value) setModalDate(e.target.value);
+    });
+    $('#btnFinalizeDay').addEventListener('click', finalizeDay);
+    $('#btnClearToday').addEventListener('click', clearToday);
+    $('#btnExportCsv').addEventListener('click', exportCsv);
+    $('#btnClearHistory').addEventListener('click', clearHistory);
+    $('#btnClearAllData').addEventListener('click', clearAllData);
+    $('#btnAddProject').addEventListener('click', addProject);
+
+    $('#stopNameInput').addEventListener('keydown', e => { if (e.key === 'Enter') savePendingStop(); });
+    $('#newProjectInput').addEventListener('keydown', e => { if (e.key === 'Enter') addProject(); });
+
+    $('#stopModal').addEventListener('click', e => { if (e.target === $('#stopModal')) closeStopModal(); });
+
+    $$('.nav-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        ensureActiveDate();
+        $('#dateDisplay').textContent = formatDisplayDate(todayKey());
+        renderTodayStops();
+      }
+    });
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
