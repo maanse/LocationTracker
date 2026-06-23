@@ -4,7 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
+
+  <!-- PWA / Add to Home Screen -->
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Journey">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Journey">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjE0MCIgZmlsbD0iIzBmMTcyYSIvPgogIDxwYXRoIGQ9Ik0gMTIwIDQwMCBDIDEyMCAyODAsIDI0MCAzMjAsIDI2MCAyMjAgQyAyODAgMTIwLCAzNjAgMTYwLCAzODAgMTEwIiAKICAgICAgICBmaWxsPSJub25lIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iMjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0gMzgwIDExMCBDIDM5MCA5MCwgNDAwIDgwLCA0MTAgNzAiIAogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyNCIgc3Ryb2tlLWRhc2hhcnJheT0iMjAgMTUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxjaXJjbGUgY3g9IjEyMCIgY3k9IjQwMCIgcj0iMzAiIGZpbGw9IiMwZjE3MmEiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIxNiIgLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODAsIDExMCkiPgogICAgPGVsbGlwc2UgY3g9IjAiIGN5PSIxNSIgcng9IjIwIiByeT0iOCIgZmlsbD0iIzAwMDAwMCIgb3BhY2l0eT0iMC4zIi8+CiAgICA8cGF0aCBkPSJNIDAgMCBDIC0zNSAtMzUsIC0zNSAtNzAsIDAgLTcwIEMgMzUgLTcwLCAzNSAtMzUsIDAgMCBaIiBmaWxsPSIjZmZmZmZmIi8+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iLTQ1IiByPSIxNCIgZmlsbD0iIzI1NjNlYiIvPgogIDwvZz4KPC9zdmc+">
+  <!-- Apple touch icons (home screen icon on iOS) -->
+  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjE0MCIgZmlsbD0iIzBmMTcyYSIvPgogIDxwYXRoIGQ9Ik0gMTIwIDQwMCBDIDEyMCAyODAsIDI0MCAzMjAsIDI2MCAyMjAgQyAyODAgMTIwLCAzNjAgMTYwLCAzODAgMTEwIiAKICAgICAgICBmaWxsPSJub25lIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iMjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0gMzgwIDExMCBDIDM5MCA5MCwgNDAwIDgwLCA0MTAgNzAiIAogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIyNCIgc3Ryb2tlLWRhc2hhcnJheT0iMjAgMTUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxjaXJjbGUgY3g9IjEyMCIgY3k9IjQwMCIgcj0iMzAiIGZpbGw9IiMwZjE3MmEiIHN0cm9rZT0iIzY0NzQ4YiIgc3Ryb2tlLXdpZHRoPSIxNiIgLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODAsIDExMCkiPgogICAgPGVsbGlwc2UgY3g9IjAiIGN5PSIxNSIgcng9IjIwIiByeT0iOCIgZmlsbD0iIzAwMDAwMCIgb3BhY2l0eT0iMC4zIi8+CiAgICA8cGF0aCBkPSJNIDAgMCBDIC0zNSAtMzUsIC0zNSAtNzAsIDAgLTcwIEMgMzUgLTcwLCAzNSAtMzUsIDAgMCBaIiBmaWxsPSIjZmZmZmZmIi8+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iLTQ1IiByPSIxNCIgZmlsbD0iIzI1NjNlYiIvPgogIDwvZz4KPC9zdmc+">
+
   <title>Work Journey & Expense Tracker</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <style>
