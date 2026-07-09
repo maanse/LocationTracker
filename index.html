@@ -852,6 +852,57 @@
   }
   function saveHistory(h) { localStorage.setItem(STORAGE.HISTORY, JSON.stringify(h)); }
 
+  /* ── Dev/demo data ──
+     Geolocation requires HTTPS, so when testing locally (file:// or http://)
+     there's no way to log a real stop. If no history exists yet and we're
+     not on HTTPS (i.e. not the live GitHub Pages site), seed a couple of
+     sample saved days so the History tab can be tried out. This never runs
+     on the live site since GitHub Pages is always served over HTTPS, and it
+     never overwrites real data since it only fires when history is empty. */
+  function seedDemoDataIfNeeded() {
+    if (location.protocol === 'https:') return;
+    if (loadHistory().length) return;
+
+    const newId = () => crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random();
+
+    function isoDateOffset(daysAgo) {
+      const d = new Date();
+      d.setDate(d.getDate() - daysAgo);
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function mkStop(name, lat, lng, tags, isoDate, time) {
+      return { id: newId(), name, lat, lng, tags, timestamp: new Date(isoDate + 'T' + time).toISOString() };
+    }
+
+    const day2Ago = isoDateOffset(2);
+    const day1Ago = isoDateOffset(1);
+
+    const demoHistory = [
+      {
+        id: newId(),
+        date: day2Ago,
+        finalizedAt: new Date(day2Ago + 'T17:30:00').toISOString(),
+        stops: [
+          mkStop('Head Office', 51.5074, -0.1278, ['Internal'], day2Ago, '08:30:00'),
+          mkStop('Client Site - Canary Wharf', 51.5054, -0.0235, ['Client Work'], day2Ago, '11:15:00'),
+          mkStop('Warehouse Depot', 51.4700, -0.0140, ['Travel'], day2Ago, '15:00:00')
+        ]
+      },
+      {
+        id: newId(),
+        date: day1Ago,
+        finalizedAt: new Date(day1Ago + 'T18:00:00').toISOString(),
+        stops: [
+          mkStop('Home Office', 51.5155, -0.1430, ['Admin'], day1Ago, '09:00:00'),
+          mkStop('Client Meeting - Kings Cross', 51.5320, -0.1233, ['Client Work', 'Travel'], day1Ago, '13:45:00')
+        ]
+      }
+    ];
+
+    saveHistory(demoHistory);
+  }
+
   function ensureActiveDate() {
     const today = todayKey();
     if (localStorage.getItem(STORAGE.ACTIVE_DATE) !== today) {
@@ -1520,6 +1571,7 @@
 
   /* ── Init ── */
   function init() {
+    seedDemoDataIfNeeded();
     $('#dateDisplay').textContent = formatDisplayDate(todayKey());
     renderTodayStops();
     renderHistory();
@@ -1531,9 +1583,16 @@
     $('#btnModalCoords').addEventListener('click', toggleLocationPicker);
 
     // Calendar icon → open native date picker
-    $('#btnModalDate').addEventListener('click', () => $('#modalDateInput').showPicker
-      ? $('#modalDateInput').showPicker()
-      : $('#modalDateInput').click());
+    $('#btnModalDate').addEventListener('click', () => {
+      const input = $('#modalDateInput');
+      try {
+        if (input.showPicker) input.showPicker();
+        else input.click();
+      } catch (err) {
+        // showPicker() can throw (e.g. blocked in a cross-origin iframe preview)
+        input.click();
+      }
+    });
     $('#modalDateInput').addEventListener('change', e => {
       if (e.target.value) setModalDate(e.target.value);
     });
