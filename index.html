@@ -215,6 +215,8 @@
     .empty-state p { margin: 0; font-size: 0.92rem; }
 
     /* ── History ── */
+    .history-entry { margin-bottom: 10px; }
+
     .history-item {
       display: flex;
       align-items: center;
@@ -224,13 +226,68 @@
       background: var(--surface-2);
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
-      margin-bottom: 10px;
+      margin-bottom: 0;
       cursor: pointer;
       transition: border-color 0.15s, background 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
     .history-item:active,
     .history-item.selected { border-color: var(--primary); background: var(--primary-soft); }
+    .history-item.expanded { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+
+    .history-item-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+    .history-chevron {
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    .history-chevron.open { transform: rotate(180deg); }
+
+    .history-expand {
+      max-height: 0;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      transition: max-height 0.25s ease;
+    }
+    .history-expand.open { max-height: 600px; }
+
+    .history-stop-list { list-style: none; margin: 0; padding: 4px 14px; }
+
+    .history-stop-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .history-stop-row:last-child { border-bottom: none; }
+
+    .history-stop-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .history-edit-btn {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .history-edit-btn:hover,
+    .history-edit-btn:active { border-color: var(--primary); color: var(--primary); }
 
     .history-date { font-weight: 700; font-size: 0.98rem; }
     .history-meta { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
@@ -782,6 +839,8 @@
   let mapMarkers = [];
   let mapPolyline = null;
   let selectedHistoryId = null;
+  let expandedHistoryId = null;
+  let editingStop = null; // { dayId, stopId } when editing an existing history stop
 
   const $ = sel => document.querySelector(sel);
   const $$ = sel => document.querySelectorAll(sel);
@@ -899,20 +958,53 @@
       return;
     }
 
-    container.innerHTML = history.map(day => `
-      <div class="history-item${day.id === selectedHistoryId ? ' selected' : ''}"
-           data-id="${day.id}" role="button" tabindex="0" aria-label="View ${formatDisplayDate(day.date)}">
-        <div>
-          <div class="history-date">${formatDisplayDate(day.date)}</div>
-          <div class="history-meta">${day.stops.length} stop${day.stops.length !== 1 ? 's' : ''} · Saved ${formatTime(day.finalizedAt)}</div>
+    container.innerHTML = history.map(day => {
+      const isExpanded = day.id === expandedHistoryId;
+      const stopsHtml = day.stops.length
+        ? `<ul class="history-stop-list">${day.stops.map(stop => `
+            <li class="history-stop-row">
+              <span class="history-stop-name">${escapeHtml(stop.name)}</span>
+              <button class="history-edit-btn" type="button" data-day-id="${day.id}" data-stop-id="${stop.id}" aria-label="Edit ${escapeHtml(stop.name)}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+              </button>
+            </li>`).join('')}</ul>`
+        : `<p class="hint" style="margin:10px 14px">No stops for this day.</p>`;
+
+      return `
+      <div class="history-entry">
+        <div class="history-item${day.id === selectedHistoryId ? ' selected' : ''}${isExpanded ? ' expanded' : ''}"
+             data-id="${day.id}" role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="View ${formatDisplayDate(day.date)}">
+          <div>
+            <div class="history-date">${formatDisplayDate(day.date)}</div>
+            <div class="history-meta">${day.stops.length} stop${day.stops.length !== 1 ? 's' : ''} · Saved ${formatTime(day.finalizedAt)}</div>
+          </div>
+          <div class="history-item-right">
+            <span class="history-badge">${day.stops.length}</span>
+            <svg class="history-chevron${isExpanded ? ' open' : ''}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
         </div>
-        <span class="history-badge">${day.stops.length}</span>
-      </div>`).join('');
+        <div class="history-expand${isExpanded ? ' open' : ''}">${stopsHtml}</div>
+      </div>`;
+    }).join('');
 
     container.querySelectorAll('.history-item').forEach(el => {
-      el.addEventListener('click', () => selectHistoryDay(el.dataset.id));
+      el.addEventListener('click', () => {
+        expandedHistoryId = (expandedHistoryId === el.dataset.id) ? null : el.dataset.id;
+        selectHistoryDay(el.dataset.id);
+      });
       el.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectHistoryDay(el.dataset.id); }
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          expandedHistoryId = (expandedHistoryId === el.dataset.id) ? null : el.dataset.id;
+          selectHistoryDay(el.dataset.id);
+        }
+      });
+    });
+
+    container.querySelectorAll('.history-edit-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        openEditStopModal(btn.dataset.dayId, btn.dataset.stopId);
       });
     });
   }
@@ -982,6 +1074,9 @@
   }
 
   function openStopModal(lat, lng) {
+    editingStop = null;
+    $('#modalTitle').textContent = 'Name this stop';
+    $('#btnSaveStop').textContent = 'Save Stop';
     pendingLocation = { lat, lng };
     $('#modalCoords').textContent = formatCoords(lat, lng);
     $('#btnModalCoords').classList.remove('active');
@@ -1012,9 +1107,53 @@
     setTimeout(() => $('#stopNameInput').focus(), 120);
   }
 
+  function openEditStopModal(dayId, stopId) {
+    const day = loadHistory().find(d => d.id === dayId);
+    if (!day) return;
+    const stop = day.stops.find(s => s.id === stopId);
+    if (!stop) return;
+
+    editingStop = { dayId, stopId };
+    pendingLocation = { lat: stop.lat, lng: stop.lng };
+
+    $('#modalTitle').textContent = 'Edit Stop';
+    $('#btnSaveStop').textContent = 'Save Changes';
+
+    $('#modalCoords').textContent = formatCoords(stop.lat, stop.lng);
+    $('#btnModalCoords').classList.remove('active');
+    $('#locationPickerWrap').style.display = 'none';
+    $('#stopNameInput').value = stop.name;
+
+    setModalDate(stop.timestamp ? stop.timestamp.slice(0, 10) : day.date);
+
+    // Populate project checkboxes, ticking the stop's existing tags
+    const projects = loadProjects();
+    const section = $('#modalProjectSection');
+    const grid = $('#modalProjectChecks');
+    const stopTags = stop.tags || [];
+
+    if (projects.length) {
+      section.style.display = '';
+      grid.innerHTML = projects.map((p, i) => `
+        <label class="project-check-label">
+          <input type="checkbox" value="${escapeHtml(p)}" id="mpc_${i}"${stopTags.includes(p) ? ' checked' : ''}>
+          <div class="cb-box"></div>
+          <span class="cb-text">${escapeHtml(p)}</span>
+        </label>`).join('');
+    } else {
+      section.style.display = 'none';
+    }
+
+    $('#stopModal').classList.add('open');
+    setTimeout(() => $('#stopNameInput').focus(), 120);
+  }
+
   function closeStopModal() {
     pendingLocation = null;
     pendingDate = null;
+    editingStop = null;
+    $('#modalTitle').textContent = 'Name this stop';
+    $('#btnSaveStop').textContent = 'Save Stop';
     $('#stopModal').classList.remove('open');
     // destroy picker map
     if (pickerMap) { pickerMap.remove(); pickerMap = null; pickerMarker = null; }
@@ -1071,19 +1210,77 @@
     }, 60);
   }
 
+  function updateExistingStop(dayId, stopId, name, lat, lng, tags, isoDate) {
+    const history = loadHistory();
+    const dayIdx = history.findIndex(d => d.id === dayId);
+    if (dayIdx === -1) return;
+    const day = history[dayIdx];
+    const stopIdx = day.stops.findIndex(s => s.id === stopId);
+    if (stopIdx === -1) return;
+    const stop = day.stops[stopIdx];
+
+    // Preserve the original time-of-day, apply the (possibly new) date
+    const origTime = new Date(stop.timestamp);
+    const timeStr = String(origTime.getHours()).padStart(2, '0') + ':' +
+                    String(origTime.getMinutes()).padStart(2, '0') + ':' +
+                    String(origTime.getSeconds()).padStart(2, '0');
+    const newTimestamp = new Date(isoDate + 'T' + timeStr).toISOString();
+
+    const updatedStop = Object.assign({}, stop, { name, lat, lng, tags, timestamp: newTimestamp });
+
+    if (isoDate === day.date) {
+      day.stops[stopIdx] = updatedStop;
+    } else {
+      // Date changed — move the stop to its (possibly new) day
+      day.stops.splice(stopIdx, 1);
+      if (!day.stops.length) history.splice(dayIdx, 1);
+
+      let targetDay = history.find(d => d.date === isoDate);
+      if (!targetDay) {
+        targetDay = {
+          id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
+          date: isoDate,
+          finalizedAt: new Date().toISOString(),
+          stops: []
+        };
+        history.push(targetDay);
+      }
+      targetDay.stops.push(updatedStop);
+    }
+
+    saveHistory(history);
+
+    const stillSelected = selectedHistoryId ? loadHistory().find(d => d.id === selectedHistoryId) : null;
+    if (stillSelected) {
+      renderMapForDay(stillSelected);
+    } else {
+      selectedHistoryId = null;
+      $('#mapCard').hidden = true;
+      renderHistory();
+    }
+
+    showToast('Stop updated');
+  }
+
   function savePendingStop() {
     const name = $('#stopNameInput').value.trim();
     if (!name) { showToast('Please enter a stop name'); $('#stopNameInput').focus(); return; }
     if (!pendingLocation) return;
 
     const tags = Array.from($$('#modalProjectChecks input:checked')).map(el => el.value);
+    const isoDate = pendingDate || todayIsoDate();
+
+    if (editingStop) {
+      updateExistingStop(editingStop.dayId, editingStop.stopId, name, pendingLocation.lat, pendingLocation.lng, tags, isoDate);
+      closeStopModal();
+      return;
+    }
 
     // Build timestamp from selected date + current time
     const now = new Date();
     const timeStr = String(now.getHours()).padStart(2,'0') + ':' +
                     String(now.getMinutes()).padStart(2,'0') + ':' +
                     String(now.getSeconds()).padStart(2,'0');
-    const isoDate = pendingDate || todayIsoDate();
     const timestamp = new Date(isoDate + 'T' + timeStr).toISOString();
 
     // If logging for a past date, save into history instead of active stops
