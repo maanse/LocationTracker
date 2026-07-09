@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="110" fill="#0f172a"/>
+
+  <!-- Journey path - recentred with generous padding -->
+  <path d="M 110 370 C 110 270, 210 300, 240 210 C 270 120, 350 150, 370 100"
+        fill="none" stroke="#2563eb" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Dashed continuation -->
+  <path d="M 370 100 C 385 75, 400 62, 415 52"
+        fill="none" stroke="#475569" stroke-width="22" stroke-dasharray="18 14" stroke-linecap="round"/>
+
+  <!-- Start dot (bottom-left) -->
+  <circle cx="110" cy="370" r="22" fill="#0f172a" stroke="#475569" stroke-width="14"/>
+  <circle cx="110" cy="370" r="6" fill="#475569"/>
+
+  <!-- End pin (top-right) - larger and clearer -->
+  <g transform="translate(370, 100)">
+    <!-- Pin shadow -->
+    <ellipse cx="0" cy="12" rx="18" ry="7" fill="#000" opacity="0.25"/>
+    <!-- Pin body - made bigger -->
+    <path d="M 0 8 C -38 -28, -38 -80, 0 -80 C 38 -80, 38 -28, 0 8 Z" fill="#ffffff"/>
+    <!-- Pin inner dot -->
+    <circle cx="0" cy="-50" r="18" fill="#2563eb"/>
+  </g>
+</svg>
